@@ -4,7 +4,7 @@ export default function Furniture(){
     return(
         <View>
         <Text>
-             {'Furniture'}
+             {'Here you can see furnitures!'}
         </Text>
         </View>
       )

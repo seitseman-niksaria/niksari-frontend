@@ -4,7 +4,7 @@ export default function Home(){
     return(
         <View>
         <Text>
-             {'Hello World'}
+             {'Hi, welcome to Niksari App!'}
         </Text>
         </View>
       )

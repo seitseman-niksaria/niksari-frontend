@@ -4,7 +4,7 @@ export default function Instructions(){
     return(
         <View>
         <Text>
-             {'Instructions'}
+             {'Here you can see instructions for furnitures.'}
         </Text>
         </View>
       )
