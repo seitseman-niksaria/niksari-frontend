@@ -19,8 +19,8 @@ export default function App() {
     <NavigationContainer>
       <Drawer.Navigator initialRouteName="Home">
         <Drawer.Screen name="Home" component={Home} />
-        <Drawer.Screen name="furniture" component={Furniture} />
-        <Drawer.Screen name="instructions" component={Instructions} />
+        <Drawer.Screen name="Furniture" component={Furniture} />
+        <Drawer.Screen name="Instructions" component={Instructions} />
         <Drawer.Screen name="Login" component={Login} />
         <Drawer.Screen name="Camera" component={CameraApp} />
       </Drawer.Navigator>
