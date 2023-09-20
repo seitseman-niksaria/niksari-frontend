@@ -6,27 +6,22 @@ import { StyleSheet, Text, View } from 'react-native';
 import Home from "./routes/home";
 import Furniture from "./routes/furniture";
 import Instructions from "./routes/instructions";
-
-const Tab = createBottomTabNavigator();
-
+import Login from "./routes/login";
+import { createDrawerNavigator } from "@react-navigation/drawer";
+import { DrawerScreenProps } from "@react-navigation/drawer";
 export default function App() {
-  return(
+  const Drawer = createDrawerNavigator(); // Create a DrawerNavigator
+
+  return (
     <NavigationContainer>
-      <Tab.Navigator>
-        <Tab.Screen name="Home" component={Home}  />
-        <Tab.Screen name="Furniture" component={Furniture} />
-        <Tab.Screen name="Instructions" component={Instructions}  />
-      </Tab.Navigator>
+      <Drawer.Navigator initialRouteName="Home">
+        <Drawer.Screen name="Home" component={Home} />
+        <Drawer.Screen name="furniture" component={Furniture} />
+        <Drawer.Screen name="instructions" component={Instructions} />
+        <Drawer.Screen name="Login" component={Login} />
+      </Drawer.Navigator>
     </NavigationContainer>
   );
 }
-/*
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
-*/
+
+
