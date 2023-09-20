@@ -1,11 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Button, Image } from 'react-native';
 import { Camera } from 'expo-camera';
 
-export default function cameraApp() {
+export default function CameraApp() {
 
     const [hasPermission, setHasPermission] = useState(null);
     const [type, setType] = useState(Camera.Constants.Type.back);
+    const [cameraApp, setCameraApp] = useState(null);
+    const [image, setImage] = useState(null);
+
+    const takePicture = async () => {
+        if(cameraApp){
+            const data = await cameraApp.takePictureAsync(null);
+            setImage(data.uri)
+        }
+    }
 
     useEffect(() => {
         (async () => {
@@ -23,21 +32,27 @@ export default function cameraApp() {
     }
     return(
         <View style={styles.container}>
-            <Camera style={styles.camera} type={type}>
+            <View style={styles.cameraContainer}>
+                <Camera
+                ref={ref => setCameraApp(ref)}
+                style={styles.camera} 
+                type={type} 
+                ratio={'1:1'} />
+            </View>
                 <View style={styles.buttonContainer}>
-                    <TouchableOpacity
+                    <Button
                     style={styles.button}
+                    title="Flip"
                     onPress={() => {
                         setType(
                             type === Camera.Constants.Type.back
                             ? Camera.Constants.Type.front
                             : Camera.Constants.Type.back
                         );
-                    }}>
-                    <Text style={styles.text}>Flip</Text>
-                    </TouchableOpacity>
+                    }} />
+                    <Button title="Take a picture" onPress={() => takePicture()} />
+                    {image && <Image source={{uri: image}} style={{flex: 1}} />}
                 </View>
-            </Camera>
         </View>
     );
 }
@@ -49,6 +64,10 @@ const styles = StyleSheet.create({
     },
     camera: {
         flex: 1,
+    },
+    cameraContainer: {
+        flex: 1,
+        flexDirection: 'row'
     },
     buttonContainer: {
         flex: 1,
