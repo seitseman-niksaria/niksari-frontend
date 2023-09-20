@@ -9,7 +9,7 @@ import Instructions from "./routes/instructions";
 import Login from "./routes/login";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { DrawerScreenProps } from "@react-navigation/drawer";
-import Camera from "./Camera";
+import CameraApp from "./routes/CameraApp";
 
 
 export default function App() {
@@ -22,7 +22,7 @@ export default function App() {
         <Drawer.Screen name="furniture" component={Furniture} />
         <Drawer.Screen name="instructions" component={Instructions} />
         <Drawer.Screen name="Login" component={Login} />
-        <Drawer.Screen name="Camera" component={Camera} />
+        <Drawer.Screen name="Camera" component={CameraApp} />
       </Drawer.Navigator>
     </NavigationContainer>
   );
