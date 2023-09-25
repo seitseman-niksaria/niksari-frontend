@@ -13,6 +13,7 @@ export default function Login(){
       <StatusBar style="auto" />
       <View style={styles.inputView}>
         <TextInput
+          keyboardType='default'
           style={styles.TextInput}
           placeholder="Sähköposti"
           placeholderTextColor="#003f5c"
