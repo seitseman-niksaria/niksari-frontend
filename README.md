@@ -7,19 +7,19 @@ Sovellus on rakennettu käyttäen muun muassa Pythonia, Javascriptia, React Nati
 
 To get started, follow these steps:
 
-1. **Clone the GitHub Repository:** Begin by cloning the repository using the command:
+1. Clone the GitHub Repository:** Begin by cloning the repository using the command:
    ```
    git clone https://github.com/seitseman-niksaria/niksari-frontend.git
    ```
-2. **Get in to the project:
+2. Get in to the project:
    ```
    cd niksari-frontend
    ```
-3. **Install all the dependecies:
+3. Install all the dependecies:
    ```
    npm install
    ```
-4. **Start the expo app:
+4. Start the expo app:
    ```
    npx expo start
    ```
