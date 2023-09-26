@@ -23,3 +23,8 @@ To get started, follow these steps:
    ```
    npx expo start
    ```
+
+
+## Niksari backend
+
+Niksari backend on toteutettu korkean tason Python frameworkilla Django. Sovelluksen prototyyppi- ja kehitysvaiheessa on käytössä SQLite tietokanta joka on hyvin integroitu Djangoon ja on oletus tietokanta Djangon ympäristössä. Ennen tuotantovaihetta tietokanta siirtyy skaalautuvampaan ja luotettavampaan PostgreSQL-tietokantaan.
