@@ -3,6 +3,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 //import Ionicons from 'react-native-vector-icons/Ionicons';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
+import { useState, useEffect } from "react";
 import Home from "./routes/home";
 import Furniture from "./routes/furniture";
 import Instructions from "./routes/instructions";
@@ -14,6 +15,19 @@ import Chatbot from "./routes/chatbot";
 
 
 export default function App() {
+  const [data, setData] = useState([]);
+
+  useEffect(() => fetchData(), []);
+
+  const fetchData = () => {
+    fetch("https://jsonplaceholder.typicode.com/todos/1")
+      .then((response) => response.json())
+      .then((responseData) => {
+        setData(responseData);
+        console.log(responseData);
+      })
+      .catch((err) => console.error(err));
+  };
   const Drawer = createDrawerNavigator(); // Create a DrawerNavigator
 
   return (
