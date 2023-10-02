@@ -7,7 +7,7 @@ Sovellus on rakennettu käyttäen muun muassa Pythonia, Javascriptia sekä React
 
 To get started, follow these steps:
 
-1. Clone the GitHub Repository:** Begin by cloning the repository using the command:
+1. Clone the GitHub Repository: Begin by cloning the repository using the command:
    ```
    git clone https://github.com/seitseman-niksaria/niksari-frontend.git
    ```
