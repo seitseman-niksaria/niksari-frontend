@@ -33,15 +33,15 @@ export default function CameraApp() {
 
     const pickImage = async () => {
         let result = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.Images,
-            allowsEditing: true,
-            aspect: [1, 1],
-            quality: 1,
+                allowsEditing: true,
+                quality: 1,
         });
         console.log(result)
 
         if (!result.canceled) {
-            setImage(result.uri);
+            setImage(result.assets[0].uri);
+        } else {
+            alert('Select an image')
         }
     };
 
