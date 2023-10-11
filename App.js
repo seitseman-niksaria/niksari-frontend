@@ -10,8 +10,8 @@ import Instructions from "./routes/instructions";
 import Login from "./routes/login";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { DrawerScreenProps } from "@react-navigation/drawer";
-import CameraApp from "./routes/CameraApp";
 import Chatbot from "./routes/chatbot";
+import NiksariCamera from "./routes/NiksariCamera";
 
 
 export default function App() {
@@ -37,7 +37,7 @@ export default function App() {
         <Drawer.Screen name="Furniture" component={Furniture} />
         <Drawer.Screen name="Instructions" component={Instructions} />
         <Drawer.Screen name="Login" component={Login} />
-        <Drawer.Screen name="Camera" component={CameraApp} />
+        <Drawer.Screen name="Camera" component={NiksariCamera} />
         <Drawer.Screen name="Chatbot" component={Chatbot} />
       </Drawer.Navigator>
     </NavigationContainer>
