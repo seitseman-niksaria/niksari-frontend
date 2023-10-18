@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { GiftedChat } from 'react-native-gifted-chat';
 
 export default function Chatbot() {
+
     const [messages, setMessages] = useState([]);
+    const [modelNameExpected, setModelNameExpected] = useState(false);
 
     // handle messages (e.g. when user gives model's name)
     const handleSendMessage = (newMessages = []) => {
@@ -11,6 +13,10 @@ export default function Chatbot() {
             setMessages((previousMessages) =>
                 GiftedChat.append(previousMessages, message)
             );
+            if (modelNameExpected) {
+                fetchDescription(message.text)
+                setModelNameExpected(false)
+            }
         }
     };
 
@@ -35,6 +41,45 @@ export default function Chatbot() {
         handleOptionSelected(selectedOption)
     }
 
+    // fetch specific furniture's description
+    const fetchDescription = (modelName) => {
+        fetch('http://127.0.0.1:8000/furniture-models/')
+            .then((response) => response.json())
+            .then((responseData) => {
+                // find the first matching furniture by name
+                const furnitureInfo = responseData.find((furniture) => furniture.furniture_name === modelName.toUpperCase());
+                if (furnitureInfo) {
+                    // extract the description from the matching furniture
+                    const furnitureDescription = furnitureInfo.furniture_description;
+                    const botInfoResponse = {
+                        _id: Math.round(Math.random() * 1000000),
+                        text: furnitureDescription,
+                        createdAt: new Date(),
+                        user: {
+                            _id: 'chatbot',
+                            name: 'Chatbot'
+                        }
+                    };
+                    setMessages((previousMessages) =>
+                        GiftedChat.append(previousMessages, botInfoResponse));
+                // if no matching furniture is found, "no info available"
+                } else {
+                    const botInfoResponse = {
+                        _id: Math.round(Math.random() * 1000000),
+                        text: 'No info available',
+                        createdAt: new Date(),
+                        user: {
+                            _id: 'chatbot',
+                            name: 'Chatbot'
+                        }
+                    };
+                    setMessages((previousMessages) =>
+                        GiftedChat.append(previousMessages, botInfoResponse));
+                }
+            })
+            .catch((err) => console.error(err));
+    };
+
     const handleOptionSelected = (selectedOption) => {
         let botResponseText = ''
         switch (selectedOption.value) {
@@ -48,7 +93,8 @@ export default function Chatbot() {
                 break;
             case 'info':
                 botResponseText = 'Sure! Please provide me with a model name.';
-                // add logic for user input
+                setModelNameExpected(true);
+                handleSendMessage()
                 break;
             default:
                 botResponseText = 'I didn\'t understand your selection. Please try again.';
@@ -71,7 +117,7 @@ export default function Chatbot() {
             GiftedChat.append(previousMessages, botResponse)
         );
     };
-    
+
     useEffect(() => {
         // initial welcome message from the chatbot
         const initialMessage = {
