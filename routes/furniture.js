@@ -13,7 +13,7 @@ export default function Furniture() {
       .then((responseData) => {
         setData(responseData);
         if (data === null) {
-          setNoFurniture('No furniture avaible.')
+          setNoFurniture('No furniture avaible.');
         }
         console.log(responseData);
       })
@@ -29,6 +29,10 @@ export default function Furniture() {
         renderItem={({ item }) => (
           <View>
             <Text>{item.furniture_name}</Text>
+            <Text>Material id: {item.material}</Text>
+            <Text>Surface finish id: {item.surface_finish}</Text>
+            <Text>Upholstery id : {item.upholstery}</Text>
+            <Text></Text>
           </View>
         )}
       ></FlatList>
