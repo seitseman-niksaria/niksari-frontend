@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { GiftedChat } from 'react-native-gifted-chat';
+import uuid from 'react-native-uuid';
 
 export default function Chatbot() {
   const [messages, setMessages] = useState([]);
@@ -88,14 +89,9 @@ export default function Chatbot() {
 
     if (model) {
       const botResponse = {
-        _id: Math.round(Math.random() * 1000000),
+        _id: uuid.v4(),
         text:
-          'Description of ' +
-          model.furniture_name +
-          ' model:' +
-          '\n' +
-          '\n' +
-          model.furniture_description,
+          `Description of ${model.furniture_name} model: \n\n${model.furniture_description}`,
         createdAt: new Date(),
         user: {
           _id: 'chatbot',
@@ -107,7 +103,7 @@ export default function Chatbot() {
       );
     } else {
       const botResponse = {
-        _id: Math.round(Math.random() * 1000000),
+        _id: uuid.v4(),
         text: 'No info available',
         createdAt: new Date(),
         user: {
@@ -124,7 +120,7 @@ export default function Chatbot() {
   // chosen option turns into user's message and shows up on screen
   const simulateUserMessage = (selectedOption) => {
     const userMessage = {
-      _id: Math.round(Math.random() * 1000000),
+      _id: uuid.v4(),
       text: selectedOption.title,
       createdAt: new Date(),
       user: {
@@ -167,7 +163,7 @@ export default function Chatbot() {
 
     // chatbot's response
     const botResponse = {
-      _id: Math.round(Math.random() * 1000000),
+      _id: uuid.v4(),
       text: botResponseText,
       createdAt: new Date(),
       user: {
