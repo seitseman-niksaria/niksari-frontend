@@ -15,8 +15,8 @@ export default function Chatbot() {
     setMessages([initialMessage]);
   }, []);
 
-  const initialMessage = {
-    _id: 1,
+  const [initialMessage, setInitialMessage] = useState({
+    _id: uuid.v4(),
     text: 'Welcome to the chatbot! How can I help you?',
     createdAt: new Date(),
     user: {
@@ -41,7 +41,7 @@ export default function Chatbot() {
         },
       ],
     },
-  };
+  });
 
   // fetch all avaible models
   const fetchModels = () => {
@@ -87,6 +87,7 @@ export default function Chatbot() {
       (furniture) => furniture.furniture_name === userInput.toUpperCase()
     );
 
+    //if a furniture is found by the name user gave
     if (model) {
       const botResponse = {
         _id: uuid.v4(),
@@ -101,6 +102,7 @@ export default function Chatbot() {
       setMessages((previousMessages) =>
         GiftedChat.append(previousMessages, botResponse)
       );
+      // if no furniture by that name is found
     } else {
       const botResponse = {
         _id: uuid.v4(),
@@ -115,6 +117,18 @@ export default function Chatbot() {
         GiftedChat.append(previousMessages, botResponse)
       );
     }
+    // gives the options again, with a different greeting, id and time (doesn't matter if info is found or not)
+    const updatedInitialMessage = {
+      ...initialMessage,
+      _id: uuid.v4(),
+      text: 'Do you need help with anything else?',
+      createdAt: new Date(),
+    };
+    setInitialMessage(updatedInitialMessage);
+    setMessages((previousMessages) =>
+      GiftedChat.append(previousMessages, updatedInitialMessage)
+    );
+
   };
 
   // chosen option turns into user's message and shows up on screen
@@ -128,19 +142,16 @@ export default function Chatbot() {
         name: 'User',
       },
     };
-
     // normal flow of the chat
     setMessages((previousMessages) =>
       GiftedChat.append(previousMessages, userMessage)
     );
-
     // when user chooses an option, this triggers the bot's response
     handleOptionSelected(selectedOption);
   };
 
   const handleOptionSelected = (selectedOption) => {
     let botResponseText = '';
-
     switch (selectedOption.value) {
       case 'camera':
         botResponseText =
@@ -160,7 +171,6 @@ export default function Chatbot() {
           "I didn't understand your selection. Please try again.";
         break;
     }
-
     // chatbot's response
     const botResponse = {
       _id: uuid.v4(),
@@ -171,7 +181,6 @@ export default function Chatbot() {
         name: 'Chatbot',
       },
     };
-
     // update the chat messages with the bot's response
     setMessages((previousMessages) =>
       GiftedChat.append(previousMessages, botResponse)
