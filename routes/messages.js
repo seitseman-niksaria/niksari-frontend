@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { GiftedChat } from 'react-native-gifted-chat';
 import uuid from 'react-native-uuid';
+import { fetchInstructions, fetchModels } from '../components/api';
+
 
 export default function Messages(props) {
 
@@ -11,36 +13,42 @@ export default function Messages(props) {
   const [missingData, setMissingData] = useState('');
 
   useEffect(() => {
-    fetchModels();
-    fetchInstructions();
+    models();
+    fetchingInstructions();
     setMessages([props.initialMessage]);
   }, []);
 
-  // fetch all avaible models
-  const fetchModels = () => {
-    fetch('http://10.0.2.2:8000/furniture-models/')
-      .then((resp) => resp.json())
-      .then((data) => {
-        setFurnitureModels(data);
-        if (data === null) {
-          setMissingData('No furniture models avaible.');
-        }
-      })
-      .catch((err) => console.error(err));
-  };
 
-  // fetch all avaible instructions
-  const fetchInstructions = () => {
-    fetch('http://10.0.2.2:8000/instructions/')
-      .then((resp) => resp.json())
-      .then((data) => {
-        setInstructions(data);
-        if (data === null) {
-          setMissingData('No instructions avaible.');
-        }
-      })
-      .catch((err) => console.error(err));
-  };
+  // fetch all available models
+  const models = async () => {
+    try{
+      const data = await fetchModels();
+      setFurnitureModels(data);
+      if (data === null) {
+        setMissingData('No furniture models available.');
+      }
+    } catch (error) {
+      console.error('Error fetching models:', error);
+      setMissingData('Error fetching furniture models.');
+    }
+
+  }
+
+
+// fetch all available instructions
+const fetchingInstructions = async () => {
+  try {
+    const data = await fetchInstructions();
+    setInstructions(data[0].instruction_text);
+    if (data === null) {
+      setMissingData('No instructions available.');
+    }
+  } catch (error) {
+    console.error('Error fetching instructions:', error);
+    setMissingData('Error fetching instructions.');
+  }
+};
+  console.log(instructions);
 
   // function that handles user input sends
   const onSend = (messages = []) => {
@@ -51,7 +59,7 @@ export default function Messages(props) {
     if (modelNameExpected) {
       furnitureInfo(msg.text);
       setModelNameExpected(false);
-    }
+    };
   };
 
   // chatbot returns description of a furniture model by user input
@@ -125,7 +133,8 @@ export default function Messages(props) {
         // add logic so user can take/choose a picture
         break;
       case 'instructions':
-        botResponseText = 'Sure! Please provide me with a model name first.';
+        botResponseText = 'Sure! These are the instructions for all models:\n\n';
+        botResponseText += `${instructions.toString()}`;    
         break;
       case 'info':
         botResponseText = 'Sure! Please provide me with a model name.';
