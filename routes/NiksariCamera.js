@@ -39,6 +39,47 @@ export default function NiksariCamera() {
         }
     }
 
+    //sending the image to server
+    const uploadImage = () => {
+        const formData = new FormData()
+        formData.append('picture', photoBase64, 'filename.jpeg')
+        console.log('bkljdfg')
+        // fetch(photoBase64)
+        // .then(res => res.blob())
+        // .then(blob => {
+        //     const formData = new FormData()
+        //     formData.append('picture', blob, 'filename.jpeg')
+        //     console.log('bkljdfg')
+    
+        fetch('http://127.0.0.1:8000/predict_model', {
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'multipart/form-data',
+                },
+                method: 'POST',
+                body: formData,
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error in the network response.');
+                } else {
+                    response.json();
+                }
+            })
+            .then(data => {
+                if (data) {
+                    console.log(data);
+                    alert('Image successfully uploaded');
+                    setPhotoBase64(''); // Reset the photoBase64 state
+                } else {
+                    console.log('Error: ' + data.errorMessage);
+                }
+            })
+            .catch(error => {
+                console.error('Network error: ', error);
+            });
+    }    
+
     return (
         <View style={styles.container}>
             {hasCameraPermission ?
@@ -50,7 +91,8 @@ export default function NiksariCamera() {
                             <Button title='Pick a Photo from Camera Roll' onPress={pickPhoto} />
                         </View>
                         <View style={{ flex: 4 }}>
-                            <Image style={{ flex: 1 }} source={{ uri: `data:image/gif;base64,${photoBase64}` }} />
+                            <Image style={{ flex: 1 }} source={{ uri: `data:image/jpeg;base64,${photoBase64}` }} />
+                            <Button title='Send Photo' onPress={uploadImage} />
                         </View>
                     </View>
                 ) : (
