@@ -30,25 +30,23 @@ export default function Messages(props) {
     } catch (error) {
       console.error('Error fetching models:', error);
       setMissingData('Error fetching furniture models.');
-    }
+    };
+  };
 
-  }
+  // fetch all available instructions
+  const fetchingInstructions = async () => {
+    try {
+      const data = await fetchInstructions();
+      setInstructions(data.instruction_text);
+      if (data === null) {
+        setMissingData('No instructions available.');
+      }
+    } catch (error) {
+      console.error('Error fetching instructions:', error);
+      setMissingData('Error fetching instructions.');
+    };
+  };
 
-
-// fetch all available instructions
-const fetchingInstructions = async () => {
-  try {
-    const data = await fetchInstructions();
-    setInstructions(data[0].instruction_text);
-    if (data === null) {
-      setMissingData('No instructions available.');
-    }
-  } catch (error) {
-    console.error('Error fetching instructions:', error);
-    setMissingData('Error fetching instructions.');
-  }
-};
-  console.log(instructions);
 
   // function that handles user input sends
   const onSend = (messages = []) => {
@@ -105,6 +103,47 @@ const fetchingInstructions = async () => {
 
   };
 
+    // chatbot returns description of a furniture model by user input
+    const furnitureInstructions = () => {
+      const model = instructions;
+  
+      //if a furniture is found by the name user gave
+      if (model) {
+        const botResponse = {
+          _id: uuid.v4(),
+          text:
+            `These are the instructions for all models:\n\n ${instructions}`,
+          createdAt: new Date(),
+          user: {
+            _id: 'chatbot',
+            name: 'Chatbot',
+          },
+        };
+        setMessages((previousMessages) =>
+          GiftedChat.append(previousMessages, botResponse)
+        );
+        // if no furniture by that name is found
+      } else {
+        const botResponse = {
+          _id: uuid.v4(),
+          text: 'No info available',
+          createdAt: new Date(),
+          user: {
+            _id: 'chatbot',
+            name: 'Chatbot',
+          },
+        };
+        setMessages((previousMessages) =>
+          GiftedChat.append(previousMessages, botResponse)
+        );
+      }
+      // gives the options again, with a different greeting, id and time (doesn't matter if info is found or not)
+      setMessages((previousMessages) =>
+        GiftedChat.append(previousMessages, props.initialMessage2)
+      );
+  
+    };
+
   // chosen option turns into user's message and shows up on screen
   const simulateUserMessage = (selectedOption) => {
     const userMessage = {
@@ -133,8 +172,10 @@ const fetchingInstructions = async () => {
         // add logic so user can take/choose a picture
         break;
       case 'instructions':
-        botResponseText = 'Sure! These are the instructions for all models:\n\n';
-        botResponseText += `${instructions.toString()}`;    
+      if (!instructions){
+        fetchInstructions();
+      }console.log(instructions);
+        botResponseText = `Sure! These are the instructions for all models:\n\n ${instructions}`;
         break;
       case 'info':
         botResponseText = 'Sure! Please provide me with a model name.';
