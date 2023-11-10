@@ -6,6 +6,8 @@ import * as ImagePicker from 'expo-image-picker';
 export default function NiksariCamera() {
   const [hasCameraPermission, setPermission] = useState(null);
   const [photoBase64, setPhotoBase64] = useState('');
+  const [responseData, setResponseData] = useState('');
+  const [showImage, setShowImage] = useState(false);
 
   const niksariCamera = useRef(null);
 
@@ -24,6 +26,7 @@ export default function NiksariCamera() {
         base64: true,
       });
       setPhotoBase64(photo.base64);
+      setShowImage(true);
     }
   };
 
@@ -37,6 +40,7 @@ export default function NiksariCamera() {
 
     if (!result.canceled) {
       setPhotoBase64(result.assets[0].base64);
+      setShowImage(true);
     }
   };
 
@@ -44,6 +48,7 @@ export default function NiksariCamera() {
   const uploadImage = () => {
     const formData = new FormData();
     formData.append('picture', photoBase64);
+    
     fetch('http://127.0.0.1:8000/predict_model', {
       headers: {
         Accept: 'application/json',
@@ -54,7 +59,9 @@ export default function NiksariCamera() {
     })
       .then((response) => response.json())
       .then((responseData) => {
+        setResponseData((JSON.stringify(responseData, null, 2)))
         setPhotoBase64('');
+        setShowImage(false);
         console.log(JSON.stringify(responseData));
       })
       .catch((error) => {
@@ -76,6 +83,7 @@ export default function NiksariCamera() {
               style={{ flex: 1 }}
               source={{ uri: `data:image/jpeg;base64,${photoBase64}` }}
             />
+            <Text>{responseData}</Text>
             <Button title='Send Photo' onPress={uploadImage} />
           </View>
         </View>
@@ -92,5 +100,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+    marginBottom: 20,
   },
 });
