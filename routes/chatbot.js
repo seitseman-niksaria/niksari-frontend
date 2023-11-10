@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { GiftedChat } from 'react-native-gifted-chat';
+import React from 'react';
 import uuid from 'react-native-uuid';
 import Messages from './messages';
 

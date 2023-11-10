@@ -37,7 +37,13 @@ export default function Messages(props) {
   const fetchingInstructions = async () => {
     try {
       const data = await fetchInstructions();
-      setInstructions(data.instruction_text);
+      for (let i=0; i<data.length; i++){
+        if (data[i].instruction_name=="General"){
+          setInstructions(data[i].instruction_text);
+          break;
+        }
+      }
+      console.log(instructions)
       if (data === null) {
         setMissingData('No instructions available.');
       }
@@ -102,47 +108,6 @@ export default function Messages(props) {
     );
 
   };
-
-    // chatbot returns description of a furniture model by user input
-    const furnitureInstructions = () => {
-      const model = instructions;
-  
-      //if a furniture is found by the name user gave
-      if (model) {
-        const botResponse = {
-          _id: uuid.v4(),
-          text:
-            `These are the instructions for all models:\n\n ${instructions}`,
-          createdAt: new Date(),
-          user: {
-            _id: 'chatbot',
-            name: 'Chatbot',
-          },
-        };
-        setMessages((previousMessages) =>
-          GiftedChat.append(previousMessages, botResponse)
-        );
-        // if no furniture by that name is found
-      } else {
-        const botResponse = {
-          _id: uuid.v4(),
-          text: 'No info available',
-          createdAt: new Date(),
-          user: {
-            _id: 'chatbot',
-            name: 'Chatbot',
-          },
-        };
-        setMessages((previousMessages) =>
-          GiftedChat.append(previousMessages, botResponse)
-        );
-      }
-      // gives the options again, with a different greeting, id and time (doesn't matter if info is found or not)
-      setMessages((previousMessages) =>
-        GiftedChat.append(previousMessages, props.initialMessage2)
-      );
-  
-    };
 
   // chosen option turns into user's message and shows up on screen
   const simulateUserMessage = (selectedOption) => {

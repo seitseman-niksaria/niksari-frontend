@@ -12,7 +12,7 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <Drawer.Navigator initialRouteName="Home">
+      <Drawer.Navigator initialRouteName="Chatbot">
         <Drawer.Screen name="Home" component={Home} />
         <Drawer.Screen name="Furniture" component={Furniture} />
         <Drawer.Screen name="Instructions" component={Instructions} />

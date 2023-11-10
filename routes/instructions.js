@@ -8,12 +8,17 @@ export default function Furniture() {
   useEffect(() => fetchData(), []);
 
   const fetchData = () => {
-    fetch('http://127.0.0.1:8000/instructions/')
+    fetch('http://10.0.2.2:8000/instructions/')
       .then((response) => response.json())
       .then((responseData) => {
-        setData(responseData);
+        for (let i=0; i<responseData.length; i++){
+          if (responseData[i].instruction_name=="General"){
+            setData(responseData[i].instruction_text);
+            break;
+          }
+        }
         if (data === null) {
-          setNoFurniture('No furniture avaible.');
+          setNoFurniture('No furniture available.');
         }
         console.log(responseData);
       })
@@ -29,9 +34,7 @@ export default function Furniture() {
         renderItem={({ item }) => (
           <View style={{ flex: 1 }}>
             <Text>{item.id}</Text>
-            <Text>Material id: {item.material}</Text>
-            <Text>Surface finish id: {item.surface_finish}</Text>
-            <Text>Upholstery id: {item.upholstery}</Text>
+            <Text>{item.instruction_name}</Text>
             <Text style={{ width: '80%' }}>{item.instruction_text}</Text>
             <Text></Text>
           </View>
