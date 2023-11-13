@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { GiftedChat } from 'react-native-gifted-chat';
 import uuid from 'react-native-uuid';
 import { fetchInstructions, fetchModels } from '../components/api';
+import { useNavigation } from '@react-navigation/native';
 
 export default function Messages(props) {
   const [messages, setMessages] = useState([]);
@@ -9,6 +10,8 @@ export default function Messages(props) {
   const [instructionExpected, setInstructionExpected] = useState(false);
   const [models, setModels] = useState([]);
   const [instructions, setInstructions] = useState([]);
+
+  const navigation = useNavigation();
 
   useEffect(() => {
     // Set all furniture models in to a models useState.
@@ -178,8 +181,8 @@ export default function Messages(props) {
     switch (selectedOption.value) {
       case 'camera':
         botResponseText =
-          'Sure! I will help you with identifying a furniture. Please provide me with a picture of the furniture';
-        // add logic so user can take/choose a picture
+        'Sure! I will help you with identifying a furniture. Please provide me with a picture of the furniture';
+        navigation.navigate('Camera');
         break;
       case 'instructions':
         botResponseText = 'Sure! Please provide me with a model name.';
