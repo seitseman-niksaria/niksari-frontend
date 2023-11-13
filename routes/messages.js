@@ -42,6 +42,8 @@ export default function Messages(props) {
     return responce;
   };
 
+  // Updates initialMessage2's id and time, since it does not update otherwise
+  // With this, initialMessage2 can be used as many times as needed
   const updateInitialMessageIdAndTime = (initialMessage2) => {
     return setMessages((previousMessages) =>
       GiftedChat.append(previousMessages, {
