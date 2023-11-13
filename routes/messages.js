@@ -42,6 +42,16 @@ export default function Messages(props) {
     return responce;
   };
 
+  const updateInitialMessageIdAndTime = (initialMessage2) => {
+    return setMessages((previousMessages) =>
+      GiftedChat.append(previousMessages, {
+        ...initialMessage2,
+        _id: uuid.v4(),
+        createdAt: new Date(),
+      })
+    );
+  };
+
   // Function to get instruction by name
   const getInstruction = (iName) => {
     const instruction = instructions.map((i) => {
@@ -97,9 +107,7 @@ export default function Messages(props) {
     }
     // Returns the options again, with a different greeting
     // id and time (doesn't matter if info is found or not).
-    setMessages((previousMessages) =>
-      GiftedChat.append(previousMessages, props.initialMessage2)
-    );
+    updateInitialMessageIdAndTime(props.initialMessage2)
   };
 
   // Function that returns care instructions of a furniture model.
@@ -152,9 +160,7 @@ export default function Messages(props) {
     }
     // Returns the options again, with a different greeting
     // id and time (doesn't matter if info is found or not).
-    setMessages((previousMessages) =>
-      GiftedChat.append(previousMessages, props.initialMessage2)
-    );
+    updateInitialMessageIdAndTime(props.initialMessage2)
   };
 
   // chosen option turns into user's message and shows up on screen
