@@ -1,8 +1,8 @@
 import React from 'react';
 import uuid from 'react-native-uuid';
-import Messages from './messages';
+import Messages from '../components/Messages';
 
-export default function Chatbot() {
+export default function ChatBot() {
 
   const initialMessage = {
     _id: uuid.v4(),
