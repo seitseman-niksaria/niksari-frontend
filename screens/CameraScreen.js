@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, Button, Image } from 'react-native';
 import { Camera } from 'expo-camera';
 import * as ImagePicker from 'expo-image-picker';
 
-export default function NiksariCamera() {
+export default function CameraScreen() {
   const [hasCameraPermission, setPermission] = useState(null);
   const [photoBase64, setPhotoBase64] = useState('');
   const [responseData, setResponseData] = useState('');

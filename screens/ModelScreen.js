@@ -1,14 +1,10 @@
-import { useState } from "react";
-import { View } from "react-native";
-const [description,setDescription] = useState("");
-const [instructions,setInstructions] = useState([]);
+import { View, Text } from 'react-native';
 
+// This is the screen of furniture model
 export default function ModelScreen() {
-
-
-    return(
-        <View>
-
-        </View>
-    )
+  return (
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <Text>This is model screen</Text>
+    </View>
+  );
 }
