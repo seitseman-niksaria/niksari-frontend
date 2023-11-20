@@ -2,7 +2,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import ModelScreen from '../../screens/ModelScreen';
 import InstructionScreen from '../../screens/InstructionScreen';
-import { Root } from './Root';
+import Root from './Root';
 
 const Stack = createNativeStackNavigator();
 

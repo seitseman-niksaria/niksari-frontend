@@ -5,7 +5,7 @@ import ChatbotScreen from '../../screens/ChatbotScreen';
 
 const Tab = createMaterialBottomTabNavigator();
 
-export const Root = () => {
+const Root = () => {
   return (
     <Tab.Navigator>
       <Tab.Screen
@@ -31,3 +31,5 @@ export const Root = () => {
     </Tab.Navigator>
   );
 };
+
+export default Root;
