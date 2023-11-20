@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { GiftedChat } from 'react-native-gifted-chat';
 import uuid from 'react-native-uuid';
-import { fetchModels, fetchInstructions } from './Fetch';
+import { fetchModels, fetchInstructions } from './api';
 import { useNavigation } from '@react-navigation/native';
 
 export default function Messages(props) {
