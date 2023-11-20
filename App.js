@@ -1,6 +1,6 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import Chatbot from './routes/Chatbot';
+import Chatbot from './routes/chatbot';
 import NiksariCamera from './routes/NiksariCamera';
 
 export default function App() {
