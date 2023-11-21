@@ -1,5 +1,5 @@
 import { PaperProvider } from 'react-native-paper';
-import Navigation from './components/Navigation/Navigation';
+import Navigation from './routes/Navigation';
 
 export default function App() {
   return (

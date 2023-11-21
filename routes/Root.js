@@ -1,7 +1,7 @@
 import { createMaterialBottomTabNavigator } from 'react-native-paper/react-navigation';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import CameraScreen from '../../screens/CameraScreen';
-import ChatbotScreen from '../../screens/ChatbotScreen';
+import CameraScreen from '../screens/CameraScreen';
+import ChatbotScreen from '../screens/ChatbotScreen';
 
 const Tab = createMaterialBottomTabNavigator();
 
