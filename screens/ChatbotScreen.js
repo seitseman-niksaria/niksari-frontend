@@ -4,6 +4,8 @@ import { fetchModels, fetchInstructions } from '../helpers/api';
 import BotResponse from '../components/Chatbot/BotResponse';
 import BotQuestion from '../components/Chatbot/BotQuestion';
 import UserResponse from '../components/Chatbot/UserResponse';
+import { useNavigation } from '@react-navigation/native';
+
 
 export default function ChatbotScreen() {
   const [messages, setMessages] = useState([]);
@@ -29,6 +31,8 @@ export default function ChatbotScreen() {
     });
     setMessages([msg]);
   }, []);
+
+  const navigation = useNavigation();
 
   // Function to get instruction by name
   const getInstruction = (iName) => {
