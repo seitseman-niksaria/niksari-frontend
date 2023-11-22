@@ -19,6 +19,12 @@ To get started, follow these steps:
    ```
    npm install
    ```
+   
+:exclamation: Keep in mind!
+For development server .env file is needed. You can download it from Teams files. Don't share it or push it to the GitHub repository!!!
+Remember that it must begin with a dot and it goes in to the root directory of the project.
+
+ 
 4. Start the expo app:
    ```
    npx expo start
