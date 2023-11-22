@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { StyleSheet, Text, View, Button, Image } from 'react-native';
 import { Camera } from 'expo-camera';
 import * as ImagePicker from 'expo-image-picker';
+import { fetchPostImage } from '../helpers/api';
 
 export default function CameraScreen() {
   const [hasCameraPermission, setPermission] = useState(null);
@@ -9,8 +10,9 @@ export default function CameraScreen() {
   const [responseData, setResponseData] = useState('');
   const [showImage, setShowImage] = useState(false);
 
-  const niksariCamera = useRef(null);
+  const cameraScreen = useRef(null);
 
+  //asking permission to use the user's camera and setting the permission
   useEffect(() => {
     askCameraPermission();
   }, []);
@@ -20,9 +22,10 @@ export default function CameraScreen() {
     setPermission(status === 'granted');
   };
 
+  //camera takes the photo and converts it to base64-format
   const takePhoto = async () => {
-    if (niksariCamera) {
-      const photo = await niksariCamera.current.takePictureAsync({
+    if (cameraScreen) {
+      const photo = await cameraScreen.current.takePictureAsync({
         base64: true,
       });
       setPhotoBase64(photo.base64);
@@ -30,6 +33,7 @@ export default function CameraScreen() {
     }
   };
 
+  //user picks the photo from gallery and it's converted to base64-format
   const pickPhoto = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
@@ -44,36 +48,30 @@ export default function CameraScreen() {
     }
   };
 
-  //sending the image to server
-  const uploadImage = () => {
-    const formData = new FormData();
-    formData.append('picture', photoBase64);
-    
-    fetch('http://127.0.0.1:8000/predict_model', {
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'multipart/form-data',
-      },
-      method: 'POST',
-      body: formData,
-    })
-      .then((response) => response.json())
-      .then((responseData) => {
-        setResponseData((JSON.stringify(responseData, null, 2)))
-        setPhotoBase64('');
-        setShowImage(false);
-        console.log(JSON.stringify(responseData));
-      })
-      .catch((error) => {
-        console.error('Network error: ', error);
-      });
+  //sending the image for prediction, handling the response data that includes the predicted model
+  const uploadImage = async () => {
+    try {
+      const formData = new FormData();
+      formData.append('picture', photoBase64);
+
+      const responseData = await fetchPostImage(formData);
+
+      setResponseData(JSON.stringify(responseData, null, 2));
+      setPhotoBase64('');
+      setShowImage(false);
+
+      console.log(JSON.stringify(responseData));
+
+    } catch (error) {
+      console.error('Network error: ', error);
+    }
   };
 
   return (
     <View style={styles.container}>
       {hasCameraPermission ? (
         <View style={{ flex: 1 }}>
-          <Camera style={{ flex: 4, minWidth: '100%' }} ref={niksariCamera} />
+          <Camera style={{ flex: 4, minWidth: '100%' }} ref={cameraScreen} />
           <View>
             <Button title='Take a Photo' onPress={takePhoto} />
             <Button title='Pick a Photo from Camera Roll' onPress={pickPhoto} />

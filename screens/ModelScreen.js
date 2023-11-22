@@ -1,4 +1,6 @@
 import { View, Text } from 'react-native';
+import { useState } from "react";
+
 
 // This is the screen of furniture model
 export default function ModelScreen() {
