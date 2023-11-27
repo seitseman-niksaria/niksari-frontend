@@ -4,7 +4,7 @@ import { Camera } from 'expo-camera';
 import * as ImagePicker from 'expo-image-picker';
 import { fetchPostImage } from '../helpers/api';
 
-export default function CameraScreen() {
+export default function CameraScreen({ navigation }) {
   const [hasCameraPermission, setPermission] = useState(null);
   const [photoBase64, setPhotoBase64] = useState('');
   const [responseData, setResponseData] = useState('');
@@ -57,13 +57,14 @@ export default function CameraScreen() {
       const responseData = await fetchPostImage(formData);
 
       setResponseData(JSON.stringify(responseData, null, 2));
+      navigation.navigate('Model'); //Has to be edited so it navigates to the correct model's screen
       setPhotoBase64('');
       setShowImage(false);
 
-      console.log(JSON.stringify(responseData));
+      console.log('Upload successful. Server response:', responseData);
 
     } catch (error) {
-      console.error('Network error: ', error);
+      console.error('Network error: ', error.message);
     }
   };
 

@@ -20,7 +20,6 @@ export const fetchInstructions = async () => {
   }
 };
 
-
 // HTTP POST request for predicting the furniture model from image
 export const fetchPostImage = async (formData) => {
   try {
@@ -33,6 +32,7 @@ export const fetchPostImage = async (formData) => {
     });
 
     if (!resp.ok) {
+      console.error('HTTP error:', resp.status);
       throw new Error(`HTTP error: ${resp.status}`);
     }
 

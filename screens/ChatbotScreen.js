@@ -5,7 +5,7 @@ import BotResponse from '../components/Chatbot/BotResponse';
 import BotQuestion from '../components/Chatbot/BotQuestion';
 import UserResponse from '../components/Chatbot/UserResponse';
 
-export default function ChatbotScreen() {
+export default function ChatbotScreen({ navigation }) {
   const [messages, setMessages] = useState([]);
   const [descriptionExpected, setDescriptionExpected] = useState(false);
   const [instructionExpected, setInstructionExpected] = useState(false);
