@@ -4,6 +4,8 @@ import { fetchModels, fetchInstructions } from '../helpers/api';
 import BotResponse from '../components/Chatbot/BotResponse';
 import BotQuestion from '../components/Chatbot/BotQuestion';
 import UserResponse from '../components/Chatbot/UserResponse';
+import { Button } from 'react-native-paper';
+import { useNavigation } from '@react-navigation/native';
 
 export default function ChatbotScreen({ navigation }) {
   const [messages, setMessages] = useState([]);
@@ -11,6 +13,8 @@ export default function ChatbotScreen({ navigation }) {
   const [instructionExpected, setInstructionExpected] = useState(false);
   const [models, setModels] = useState([]);
   const [instructions, setInstructions] = useState([]);
+
+  const navigation = useNavigation();
 
   useEffect(() => {
     // Set all furniture models in to a models useState.
@@ -68,7 +72,17 @@ export default function ChatbotScreen({ navigation }) {
     // the description of the model is saved in the messages useState.
     if (model) {
       const msg = BotResponse({
-        text: `Description of ${model.furniture_name} model: \n\n${model.furniture_description}`,
+        text: (
+          <Button
+            onPress={() => {
+              navigation.navigate('Model', {
+                furnitureName: model.furniture_name,
+              });
+            }}
+          >
+            {model.furniture_name}
+          </Button>
+        ),
       });
       setMessages((previousMessages) =>
         GiftedChat.append(previousMessages, msg)
