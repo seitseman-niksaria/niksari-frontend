@@ -57,7 +57,9 @@ export default function CameraScreen({ navigation }) {
       const responseData = await fetchPostImage(formData);
 
       setResponseData(JSON.stringify(responseData, null, 2));
-      navigation.navigate('Model'); //Has to be edited so it navigates to the correct model's screen
+      navigation.navigate('Model', {
+        furnitureName: responseData.furniture_name
+      });
       setPhotoBase64('');
       setShowImage(false);
 

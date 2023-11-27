@@ -7,7 +7,7 @@ import UserResponse from '../components/Chatbot/UserResponse';
 import { Button } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 
-export default function ChatbotScreen({ navigation }) {
+export default function ChatbotScreen() {
   const [messages, setMessages] = useState([]);
   const [descriptionExpected, setDescriptionExpected] = useState(false);
   const [instructionExpected, setInstructionExpected] = useState(false);
