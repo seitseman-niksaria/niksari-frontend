@@ -49,6 +49,7 @@ export default function CameraScreen({ navigation }) {
   };
 
   //sending the image for prediction, handling the response data that includes the predicted model
+  //navigates automatically to the correct model's screen
   const uploadImage = async () => {
     try {
       const formData = new FormData();
@@ -84,7 +85,6 @@ export default function CameraScreen({ navigation }) {
               style={{ flex: 1 }}
               source={{ uri: `data:image/jpeg;base64,${photoBase64}` }}
             />
-            <Text>{responseData}</Text>
             <Button title='Send Photo' onPress={uploadImage} />
           </View>
         </View>
