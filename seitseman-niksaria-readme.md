@@ -125,7 +125,7 @@ See the [open issues](https://github.com/github_username/repo_name/issues) for a
 
 The app was created by (in alphabetical order):
 
-- <a hreaf="https://github.com/orgs/seitseman-niksaria/people/anni-ikonen">Anni Ikonen</a>
+- <a href="https://github.com/orgs/seitseman-niksaria/people/anni-ikonen">Anni Ikonen</a>
 - Samu Koponen
 - Jukka Lakkala
 - Vilma Laurila
