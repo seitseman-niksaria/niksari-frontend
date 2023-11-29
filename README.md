@@ -29,4 +29,8 @@ Remember that it must begin with a dot and it goes in to the root directory of t
    ```
    npx expo start
    ```
-
+5. Install Expo app from play store or Expo Go AppStore.
+   ```
+   https://expo.dev/client
+   ```
+6. Scan the QR code above with Expo Go (Android) or the Camera app (iOS)
