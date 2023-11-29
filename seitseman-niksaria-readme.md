@@ -125,13 +125,13 @@ See the [open issues](https://github.com/github_username/repo_name/issues) for a
 
 The app was created by (in alphabetical order):
 
-- <a href="https://github.com/orgs/seitseman-niksaria/people/anni-ikonen">Anni Ikonen</a>
-- Samu Koponen
-- Jukka Lakkala
-- Vilma Laurila
-- Ada Meriläinen
-- Jesse Nevalainen
-- German Svidzinskij
+- <a href="https://github.com/anni-ikonen">Anni Ikonen</a>
+- <a href="https://github.com/SProkopios">Samu Koponen</a>
+- <a href="https://github.com/JukkaLak">Jukka Lakkala</a>
+- <a href="https://github.com/vilma-l">Vilma Laurila</a>
+- <a href="https://github.com/adaamariaa">Ada Meriläinen</a>
+- <a href="https://github.com/Suppiluliumas">Jesse Nevalainen</a>
+- <a href="https://github.com/svidzger">German Svidzinskij</a>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
