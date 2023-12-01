@@ -16,12 +16,8 @@ const BotQuestion = ({ text }) => {
       keepIt: true,
       values: [
         {
-          title: 'Help me identify a piece of furniture',
+          title: 'Help me identify a piece of furniture with camera',
           value: 'camera',
-        },
-        {
-          title: 'Give me cleaning/care tips for my furniture model',
-          value: 'instructions',
         },
         {
           title: 'Give me info about the furniture by model name',

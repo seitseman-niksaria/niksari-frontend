@@ -1,10 +1,28 @@
-import { View, Text } from 'react-native';
+import { Text } from 'react-native-paper';
+import { ScrollView, StyleSheet } from 'react-native';
+import { useRoute } from '@react-navigation/native';
 
-// This is the screen of instruction for furniture model
-export default function InstructionScreen() {
+// This screen shows instruction based on what instruction is chosen in ModelScreen.
+const InstructionScreen = () => {
+  const route = useRoute();
+  const { instruction } = route.params;
+
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>This is instruction screen</Text>
-    </View>
+    <ScrollView style={styles.container}>
+      <Text variant='bodyMedium' style={styles.instruction}>
+        {instruction.instruction_text}
+      </Text>
+    </ScrollView>
   );
-}
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  instruction: {
+    padding: 40,
+  },
+});
+
+export default InstructionScreen;
