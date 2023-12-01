@@ -13,6 +13,8 @@ export default function ModelScreen() {
 
   // This function finds matching ids
   const findMatchingInstructions = () => {
+    console.log(model);
+    console.log(instructions);
     // Extract the instruction IDs from the model
     const modelInstructionIds = model.instructions;
     // Filter the instructions based on the extracted IDs

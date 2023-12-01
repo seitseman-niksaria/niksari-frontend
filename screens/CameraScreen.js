@@ -2,19 +2,29 @@ import React, { useState, useEffect, useRef } from 'react';
 import { StyleSheet, Text, View, Button, Image } from 'react-native';
 import { Camera } from 'expo-camera';
 import * as ImagePicker from 'expo-image-picker';
-import { fetchPostImage } from '../helpers/api';
+import { fetchPostImage, fetchInstructions, fetchModels } from '../helpers/api';
+import { useNavigation } from '@react-navigation/native';
 
-export default function CameraScreen({ navigation }) {
+export default function CameraScreen() {
   const [hasCameraPermission, setPermission] = useState(null);
   const [photoBase64, setPhotoBase64] = useState('');
   const [responseData, setResponseData] = useState('');
   const [showImage, setShowImage] = useState(false);
+  const [instructions, setInstructions] = useState([]);
+  const [models, setModels] = useState([]);
 
+  const navigation = useNavigation();
   const cameraScreen = useRef(null);
 
   //asking permission to use the user's camera and setting the permission
   useEffect(() => {
     askCameraPermission();
+    fetchInstructions().then((resp) => {
+      setInstructions(resp);
+    });
+    fetchModels().then((resp) => {
+      setModels(resp);
+    });
   }, []);
 
   const askCameraPermission = async () => {
@@ -54,18 +64,20 @@ export default function CameraScreen({ navigation }) {
     try {
       const formData = new FormData();
       formData.append('picture', photoBase64);
+      const data = await fetchPostImage(formData);
 
-      const responseData = await fetchPostImage(formData);
+      const model = models.find(
+        (m) => m.furniture_name === data.furniture_name
+      );
 
-      setResponseData(JSON.stringify(responseData, null, 2));
       navigation.navigate('Model', {
-        furnitureName: responseData.furniture_name
+        model: model,
+        instructions: instructions,
       });
       setPhotoBase64('');
       setShowImage(false);
 
       console.log('Upload successful. Server response:', responseData);
-
     } catch (error) {
       console.error('Network error: ', error.message);
     }
