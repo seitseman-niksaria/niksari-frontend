@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { StyleSheet, Text, View, Button, Image } from 'react-native';
+import { StyleSheet, View, Image, Dimensions } from 'react-native';
+import { Button, ActivityIndicator } from 'react-native-paper';
 import { Camera } from 'expo-camera';
 import * as ImagePicker from 'expo-image-picker';
 import { fetchPostImage, fetchInstructions, fetchModels } from '../helpers/api';
@@ -10,6 +11,7 @@ export default function CameraScreen() {
   const [photoBase64, setPhotoBase64] = useState('');
   const [responseData, setResponseData] = useState('');
   const [showImage, setShowImage] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [instructions, setInstructions] = useState([]);
   const [models, setModels] = useState([]);
 
@@ -64,8 +66,12 @@ export default function CameraScreen() {
     try {
       const formData = new FormData();
       formData.append('picture', photoBase64);
+      setIsLoading(true);
       const data = await fetchPostImage(formData);
-
+      // Conditional rendering for loading animation.
+      if (data) {
+        setIsLoading(false);
+      }
       const model = models.find(
         (m) => m.furniture_name === data.furniture_name
       );
@@ -85,34 +91,106 @@ export default function CameraScreen() {
 
   return (
     <View style={styles.container}>
-      {hasCameraPermission ? (
-        <View style={{ flex: 1 }}>
-          <Camera style={{ flex: 4, minWidth: '100%' }} ref={cameraScreen} />
-          <View>
-            <Button title='Take a Photo' onPress={takePhoto} />
-            <Button title='Pick a Photo from Camera Roll' onPress={pickPhoto} />
-          </View>
-          <View style={{ flex: 4 }}>
-            <Image
-              style={{ flex: 1 }}
-              source={{ uri: `data:image/jpeg;base64,${photoBase64}` }}
-            />
-            <Button title='Send Photo' onPress={uploadImage} />
-          </View>
+      {/* {hasCameraPermission ? (
+        <View style={{ flex: 1 }}> */}
+      <Camera style={styles.camera} ref={cameraScreen} />
+      <View style={styles.takePhoto}>
+        <Button
+          style={{ height: 40 }}
+          icon={'camera-outline'}
+          mode='text'
+          onPress={takePhoto}
+        >
+          Take Picture
+        </Button>
+        <Button
+          style={{ height: 40 }}
+          icon={'view-gallery-outline'}
+          mode='text'
+          onPress={pickPhoto}
+        >
+          Photos
+        </Button>
+      </View>
+      <View style={{ flex: 5 }}>
+        <Image
+          style={styles.image}
+          source={{ uri: `data:image/jpeg;base64,${photoBase64}` }}
+        />
+        <View
+          style={{
+            paddingTop: 5,
+            paddingLeft: 130,
+            width: '100%',
+            flexDirection: 'row',
+          }}
+        >
+          <Button
+            icon={'cube-send'}
+            style={{
+              marginBottom: 10,
+              width: '30%',
+            }}
+            mode='text'
+            onPress={uploadImage}
+          >
+            Send
+          </Button>
+          {isLoading && (
+            <ActivityIndicator style={{ paddingBottom: 10 }} animating={true} />
+          )}
         </View>
+      </View>
+      {/* </View>
       ) : (
         <Text>No access to camera</Text>
-      )}
+      )} */}
     </View>
   );
 }
 
+const win = Dimensions.get('window');
+const ratio = win.width;
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: 20,
+  },
+  camera: {
+    flex: 4,
+    width: '90%',
+    marginTop: 100,
+  },
+  takePhoto: {
+    flex: 0.7,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingLeft: 40,
+    paddingRight: 40,
+    paddingTop: 10,
+    width: '100%',
+  },
+  image: {
+    marginBottom: 10,
+    width: win.width - 44,
+    height: 290,
+  },
+  instructions: {
+    flex: 0.4,
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 20,
+    width: '90%',
+  },
+  buttonText: {
+    fontSize: 16,
+  },
+  divider: {
+    marginVertical: 5,
+    borderWidth: 0.5,
+    borderColor: 'gray',
+    width: '85%',
   },
 });
