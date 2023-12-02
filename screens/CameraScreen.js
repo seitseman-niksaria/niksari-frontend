@@ -1,6 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { StyleSheet, View, Image, Dimensions } from 'react-native';
-import { Button, ActivityIndicator } from 'react-native-paper';
+import {
+  StyleSheet,
+  View,
+  Image,
+  Dimensions,
+  SafeAreaView,
+} from 'react-native';
+import { Button, ActivityIndicator, Text } from 'react-native-paper';
 import { Camera } from 'expo-camera';
 import * as ImagePicker from 'expo-image-picker';
 import { fetchPostImage, fetchInstructions, fetchModels } from '../helpers/api';
@@ -90,107 +96,101 @@ export default function CameraScreen() {
   };
 
   return (
-    <View style={styles.container}>
-      {/* {hasCameraPermission ? (
-        <View style={{ flex: 1 }}> */}
-      <Camera style={styles.camera} ref={cameraScreen} />
-      <View style={styles.takePhoto}>
-        <Button
-          style={{ height: 40 }}
-          icon={'camera-outline'}
-          mode='text'
-          onPress={takePhoto}
-        >
-          Take Picture
-        </Button>
-        <Button
-          style={{ height: 40 }}
-          icon={'view-gallery-outline'}
-          mode='text'
-          onPress={pickPhoto}
-        >
-          Photos
-        </Button>
-      </View>
-      <View style={{ flex: 5 }}>
-        <Image
-          style={styles.image}
-          source={{ uri: `data:image/jpeg;base64,${photoBase64}` }}
-        />
-        <View
-          style={{
-            paddingTop: 5,
-            paddingLeft: 130,
-            width: '100%',
-            flexDirection: 'row',
-          }}
-        >
-          <Button
-            icon={'cube-send'}
-            style={{
-              marginBottom: 10,
-              width: '30%',
-            }}
-            mode='text'
-            onPress={uploadImage}
-          >
-            Send
-          </Button>
-          {isLoading && (
-            <ActivityIndicator style={{ paddingBottom: 10 }} animating={true} />
-          )}
+    <SafeAreaView style={styles.container}>
+      {hasCameraPermission ? (
+        <View style={styles.cameraContainer}>
+          <Camera style={styles.camera} ref={cameraScreen} />
+          <View style={styles.takePhoto}>
+            <Button
+              style={styles.button}
+              icon={'camera-outline'}
+              mode='text'
+              onPress={takePhoto}
+            >
+              Take Picture
+            </Button>
+            <Button
+              style={styles.button}
+              icon={'view-gallery-outline'}
+              mode='text'
+              onPress={pickPhoto}
+            >
+              Photos
+            </Button>
+          </View>
+          <View style={styles.imageContainer}>
+            <Image
+              style={styles.image}
+              source={{ uri: `data:image/jpeg;base64,${photoBase64}` }}
+            />
+          </View>
+          <View style={styles.uploadButtonContainer}>
+            <Button
+              icon={'cube-send'}
+              style={styles.uploadButton}
+              mode='text'
+              onPress={uploadImage}
+            >
+              Send
+            </Button>
+            <ActivityIndicator
+              style={styles.loadingIndicator}
+              animating={isLoading}
+            />
+          </View>
         </View>
-      </View>
-      {/* </View>
       ) : (
         <Text>No access to camera</Text>
-      )} */}
-    </View>
+      )}
+    </SafeAreaView>
   );
 }
 
-const win = Dimensions.get('window');
-const ratio = win.width;
+const screen = Dimensions.get('screen');
+const ratio = screen.width;
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
+    justifyContent: 'center',
+  },
+  cameraContainer: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
   },
   camera: {
-    flex: 4,
-    width: '90%',
-    marginTop: 100,
+    flex: 6,
+    width: screen.width - 30,
+    marginTop: 40,
   },
   takePhoto: {
-    flex: 0.7,
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingLeft: 40,
-    paddingRight: 40,
-    paddingTop: 10,
-    width: '100%',
+    padding: 10,
+  },
+  button: {
+    height: 40,
+  },
+  imageContainer: {
+    flex: 5,
   },
   image: {
     marginBottom: 10,
-    width: win.width - 44,
-    height: 290,
+    width: screen.width - 30,
+    height: ratio - 130,
   },
-  instructions: {
-    flex: 0.4,
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 20,
-    width: '90%',
+  uploadButtonContainer: {
+    flexDirection: 'row',
+    padding: 10,
+    marginTop: 15,
   },
-  buttonText: {
-    fontSize: 16,
+  uploadButton: {
+    height: 40,
+    width: '30%',
+    marginTop: 25,
+    marginLeft: 20,
   },
-  divider: {
-    marginVertical: 5,
-    borderWidth: 0.5,
-    borderColor: 'gray',
-    width: '85%',
+  loadingIndicator: {
+    paddingTop: 20,
   },
 });
