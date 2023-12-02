@@ -59,7 +59,7 @@ export default function ChatbotScreen() {
         text: (
           <Text>
             I found model you were looking for. You can click the button below
-            to go to the {userInput} model page.
+            to go to the {userInput.toUpperCase()} model page.
           </Text>
         ),
       });
@@ -88,7 +88,7 @@ export default function ChatbotScreen() {
       // If model is not found then negative responce is saved in messages useState.
     } else {
       const msg = BotResponse({
-        text: `There is no model named ${userInput}. Try again!`,
+        text: `There is no model named ${userInput.toUpperCase()}. Try again!`,
       });
       setMessages((previousMessages) =>
         GiftedChat.append(previousMessages, msg)
