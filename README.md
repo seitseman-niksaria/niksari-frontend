@@ -124,9 +124,9 @@ Here are a few views of the app in usage: the chatbot screen, asking the chatbot
 
 <img width="225" alt="pieni1" src="https://github.com/seitseman-niksaria/documentation/assets/122804701/f3c1234b-9286-4576-a8ab-748f670730f3"><img width="225" alt="pieni2" src="https://github.com/seitseman-niksaria/documentation/assets/122804701/af847a6e-71b5-454b-a3a3-6622696a9017"><img width="225" alt="pieni3" src="https://github.com/seitseman-niksaria/documentation/assets/122804701/a7e94604-5a01-4e42-9e23-5614f6e46687">
 
-Below you can see a camera screen view where the user has selected a picture from their device's gallery or take picture with camera. When clicking "Send" for the first time, please be patient - it might take some time for the app to connect with the server!
+Below you can see a camera screen view. User can take picture or choose image from phone gallery. When clicking "Send" for the first time, please be patient - it might take some time for the app to connect with the server!
 
-<img width="225" alt="pieni4" src="https://github.com/seitseman-niksaria/niksari-frontend/assets/50700099/7eaa697b-acf6-4c70-ba4b-84246f92218b">
+<img width="225" alt="pieni4" src="https://github.com/seitseman-niksaria/documentation/assets/50700099/d1126b24-c825-46ce-8ccb-1d000d2be7da">
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
